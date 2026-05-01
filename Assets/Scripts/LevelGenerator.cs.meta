@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 22bb3fdb4944b0d4f9fc36395aba3335
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - floorPrefab: {fileID: 5150404957177095154, guid: 5954d36abb3c69a40b62b7fae8c412ba, type: 3}
+  - chickPrefab: {fileID: 6961768391107710551, guid: 8f077864ea2014b47b223e8a3a87067a, type: 3}
+  - catPrefab: {fileID: 559408088750280736, guid: c5e8702dfb3299f45b7a50bd8f1f0c33, type: 3}
+  - exitPrefab: {fileID: 979812636114406858, guid: eb64d4d7054bd544e83628a1b3aaf629, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
