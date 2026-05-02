@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     public GameObject startPanel;
     public GameObject losePanel;
     public GameObject winPanel;
+    public GameObject chickHUDPanel;
+    public GameObject levelHUDPanel;
 
     private static bool gameHasStartedBefore = false;
 
@@ -70,6 +72,13 @@ public class UIManager : MonoBehaviour
 
         if (winPanel != null) winPanel.SetActive(false);
         if (losePanel != null) losePanel.SetActive(false);
+
+        // Find and ensure HUD is visible at start
+        if (chickHUDPanel == null) chickHUDPanel = FindInactivePanel("ChickPanel", "Chick Panel");
+        if (levelHUDPanel == null) levelHUDPanel = FindInactivePanel("level Panel", "Level Panel");
+
+        if (chickHUDPanel != null) chickHUDPanel.SetActive(true);
+        if (levelHUDPanel != null) levelHUDPanel.SetActive(true);
 
         if (resultText != null)
         {
@@ -180,6 +189,10 @@ public class UIManager : MonoBehaviour
 
         if (winPanel != null) winPanel.SetActive(true); // Automatically show your new Win Panel!
 
+        // Hide HUD on Win
+        if (chickHUDPanel != null) chickHUDPanel.SetActive(false);
+        if (levelHUDPanel != null) levelHUDPanel.SetActive(false);
+
         Time.timeScale = 0f;
 
         if (CameraShake.Instance != null) CameraShake.Instance.StopShake();
@@ -199,6 +212,10 @@ public class UIManager : MonoBehaviour
         if (CameraShake.Instance != null) CameraShake.Instance.StopShake();
 
         if (losePanel != null) losePanel.SetActive(true); // Automatically show your Lose Panel!
+
+        // Hide HUD on Fail
+        if (chickHUDPanel != null) chickHUDPanel.SetActive(false);
+        if (levelHUDPanel != null) levelHUDPanel.SetActive(false);
 
         Time.timeScale = 0f;
 
