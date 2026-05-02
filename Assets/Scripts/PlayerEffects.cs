@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerEffects : MonoBehaviour
@@ -72,9 +72,6 @@ public class PlayerEffects : MonoBehaviour
         // ALWAYS reset scale (prevents stacking bug)
         visual.localScale = originalScale;
 
-        Vector3 squash = new Vector3(originalScale.x * 1.15f, originalScale.y * 0.85f, originalScale.z);
-        Vector3 stretch = new Vector3(originalScale.x * 0.9f, originalScale.y * 1.1f, originalScale.z);
-
         float duration = 0.06f;
         float t = 0f;
 
@@ -82,7 +79,9 @@ public class PlayerEffects : MonoBehaviour
         while (t < duration)
         {
             t += Time.deltaTime;
-            visual.localScale = Vector3.Lerp(originalScale, squash, t / duration);
+            float currentSign = Mathf.Sign(visual.localScale.x);
+            Vector3 squash = new Vector3(Mathf.Abs(originalScale.x) * 1.15f * currentSign, originalScale.y * 0.85f, originalScale.z);
+            visual.localScale = Vector3.Lerp(visual.localScale, squash, t / duration);
             yield return null;
         }
 
@@ -92,6 +91,9 @@ public class PlayerEffects : MonoBehaviour
         while (t < duration)
         {
             t += Time.deltaTime;
+            float currentSign = Mathf.Sign(visual.localScale.x);
+            Vector3 squash = new Vector3(Mathf.Abs(originalScale.x) * 1.15f * currentSign, originalScale.y * 0.85f, originalScale.z);
+            Vector3 stretch = new Vector3(Mathf.Abs(originalScale.x) * 0.9f * currentSign, originalScale.y * 1.1f, originalScale.z);
             visual.localScale = Vector3.Lerp(squash, stretch, t / duration);
             yield return null;
         }
@@ -102,11 +104,15 @@ public class PlayerEffects : MonoBehaviour
         while (t < duration)
         {
             t += Time.deltaTime;
-            visual.localScale = Vector3.Lerp(stretch, originalScale, t / duration);
+            float currentSign = Mathf.Sign(visual.localScale.x);
+            Vector3 stretch = new Vector3(Mathf.Abs(originalScale.x) * 0.9f * currentSign, originalScale.y * 1.1f, originalScale.z);
+            Vector3 targetOriginal = new Vector3(Mathf.Abs(originalScale.x) * currentSign, originalScale.y, originalScale.z);
+            visual.localScale = Vector3.Lerp(stretch, targetOriginal, t / duration);
             yield return null;
         }
 
-        visual.localScale = originalScale;
+        float finalSign = Mathf.Sign(visual.localScale.x);
+        visual.localScale = new Vector3(Mathf.Abs(originalScale.x) * finalSign, originalScale.y, originalScale.z);
 
         isBouncing = false;
     }

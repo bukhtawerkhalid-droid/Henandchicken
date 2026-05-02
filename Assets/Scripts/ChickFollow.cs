@@ -17,6 +17,13 @@ public class ChickFollow : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         float distance = dir.magnitude;
 
+        // --- FLIP LOGIC ---
+        // Flip based on movement direction relative to target
+        if (dir.x > 0.05f)
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        else if (dir.x < -0.05f)
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+
         // --- SCREEN WRAP SNAP ---
         float screenWidth = Camera.main != null
             ? Camera.main.orthographicSize * Camera.main.aspect * 2f

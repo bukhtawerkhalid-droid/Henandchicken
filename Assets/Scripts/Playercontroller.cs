@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -71,18 +71,24 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector2(currentVelocity, rb.linearVelocity.y);
 
-        float targetRotation = -currentVelocity * 3f;
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation,
-            Quaternion.Euler(0, 0, targetRotation),
-            Time.fixedDeltaTime * 10f
-        );
+        // --- VISUALS ---
+        Transform visual = transform.Find("Visual");
+        if (visual != null)
+        {
+            // Rotate ONLY the visual
+            float targetRotation = -currentVelocity * 3f;
+            visual.rotation = Quaternion.Lerp(
+                visual.rotation,
+                Quaternion.Euler(0, 0, targetRotation),
+                Time.fixedDeltaTime * 10f
+            );
 
-        // Correct flip for your sprite
-        if (currentVelocity > 0.05f)
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        else if (currentVelocity < -0.05f)
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            // Flip ONLY the visual (or handle properly if it faces a specific way)
+            if (currentVelocity > 0.05f)
+                visual.localScale = new Vector3(-Mathf.Abs(visual.localScale.x), visual.localScale.y, visual.localScale.z);
+            else if (currentVelocity < -0.05f)
+                visual.localScale = new Vector3(Mathf.Abs(visual.localScale.x), visual.localScale.y, visual.localScale.z);
+        }
     }
 
     void LateUpdate()
