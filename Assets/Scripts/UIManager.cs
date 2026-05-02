@@ -77,8 +77,8 @@ public class UIManager : MonoBehaviour
         if (chickHUDPanel == null) chickHUDPanel = FindInactivePanel("ChickPanel", "Chick Panel");
         if (levelHUDPanel == null) levelHUDPanel = FindInactivePanel("level Panel", "Level Panel");
 
-        if (chickHUDPanel != null) chickHUDPanel.SetActive(true);
-        if (levelHUDPanel != null) levelHUDPanel.SetActive(true);
+        if (chickHUDPanel != null) chickHUDPanel.SetActive(!isLevelOne);
+        if (levelHUDPanel != null) levelHUDPanel.SetActive(!isLevelOne);
 
         if (resultText != null)
         {
@@ -112,24 +112,7 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f; // Unpause the game!
         gameHasStartedBefore = true;
-
-        if (startPanel != null) startPanel.SetActive(false);
-
-        // Hide the start image (case-insensitive search just in case)
-        foreach (Transform t in FindObjectsOfType<Transform>(true))
-        {
-            if (t.name.ToLower() == "start image" || t.name.ToLower() == "start image 1")
-            {
-                t.gameObject.SetActive(false);
-            }
-            if (t.name.ToLower() == "start button" || t.name.ToLower() == "button")
-            {
-                t.gameObject.SetActive(false);
-            }
-        }
-
-        // We can just hide the button itself since this method is called by the button
-        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject?.SetActive(false);
+        SceneManager.LoadScene(1); // Load the actual Level 1 scene
     }
 
     // Call this from your Win Panel's "Next Level" button!
