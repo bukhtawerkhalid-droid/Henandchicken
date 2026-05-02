@@ -26,7 +26,15 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1f;
+        // Pause the game on Level 1 until they click Play
+        if (SceneManager.GetActiveScene().buildIndex == 0 && !gameHasStartedBefore)
+        {
+            Time.timeScale = 0f; 
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
 
         // 1. Fix EventSystem missing (prevents button clicks)
         if (UnityEngine.EventSystems.EventSystem.current == null)
@@ -86,12 +94,39 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    // Call this from your Play Button's OnClick event!
+    public void StartGame()
+    {
+        Time.timeScale = 1f; // Unpause the game!
+        gameHasStartedBefore = true;
+
+        // Hide the start image (case-insensitive search just in case)
+        foreach (Transform t in FindObjectsOfType<Transform>(true))
+        {
+            if (t.name.ToLower() == "start image" || t.name.ToLower() == "start image 1")
+            {
+                t.gameObject.SetActive(false);
+            }
+            if (t.name.ToLower() == "start button" || t.name.ToLower() == "button")
+            {
+                t.gameObject.SetActive(false);
+            }
+        }
+
+        // We can just hide the button itself since this method is called by the button
+        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject?.SetActive(false);
+    }
+
     // Call this from your Win Panel's "Next Level" button!
     public void NextLevel()
     {
         Time.timeScale = 1f;
-        LevelGenerator.currentLevel++;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextScene >= SceneManager.sceneCountInBuildSettings)
+        {
+            nextScene = 0; // Loop back to the first level if we beat the last one
+        }
+        SceneManager.LoadScene(nextScene);
     }
 
     void Update()
@@ -127,9 +162,7 @@ public class UIManager : MonoBehaviour
 
         if (isWin && Input.GetKeyDown(KeyCode.Space))
         {
-            Time.timeScale = 1f;
-            LevelGenerator.currentLevel++;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            NextLevel();
         }
     }
 

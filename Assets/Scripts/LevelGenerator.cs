@@ -59,6 +59,9 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
+        // Automatically sync current level with the Scene's Build Index (Level 1 = Build Index 0)
+        currentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1;
+        
         UnityEngine.Random.InitState(currentLevel * 1000);
         if (Camera.main == null) return;
 
@@ -70,10 +73,10 @@ public class LevelGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            currentLevel++;
-            if (currentLevel > 10) currentLevel = 1;
-            UnityEngine.SceneManagement.SceneManager.LoadScene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            int nextScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1;
+            if (nextScene >= UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings)
+                nextScene = 0; // Loop back to level 1
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nextScene);
         }
     }
 
@@ -122,7 +125,45 @@ public class LevelGenerator : MonoBehaviour
 
     LevelConfig GetConfig(int level)
     {
-        return levelConfigs[Mathf.Clamp(level, 1, 10)];
+        if (level <= 10)
+        {
+            return levelConfigs[Mathf.Clamp(level, 1, 10)];
+        }
+        
+        // Procedural generation for Level 11+ using the 3-Archetype Cycle
+        LevelConfig gen = new LevelConfig();
+        int cycle = (level - 1) % 3;
+        int scale = level / 10; // Slowly increases stats as you climb past 10, 20, 30...
+
+        if (cycle == 0) 
+        {
+            // Archetype A: The Marathon
+            gen.floors = 8 + scale;
+            gen.cats = 4 + scale;
+            gen.totalChicks = 10 + scale;
+            gen.targetChicks = Mathf.Max(1, (gen.totalChicks * 50) / 100); // Only need 50%
+            gen.gapPattern = "mixed";
+        }
+        else if (cycle == 1) 
+        {
+            // Archetype B: The Precision Drop
+            gen.floors = 5; // Stay short
+            gen.cats = 1;   // Very few enemies
+            gen.totalChicks = 5 + scale;
+            gen.targetChicks = Mathf.Max(1, (gen.totalChicks * 90) / 100); // Must get almost all of them
+            gen.gapPattern = "random"; // High chaos gaps
+        }
+        else 
+        {
+            // Archetype C: The Swarm
+            gen.floors = 7;
+            gen.cats = 5 + (scale * 2); // Huge number of cats
+            gen.totalChicks = 8 + scale;
+            gen.targetChicks = Mathf.Max(1, (gen.totalChicks * 70) / 100); // 70% required
+            gen.gapPattern = "alternating";
+        }
+
+        return gen;
     }
 
     // =========================================================
