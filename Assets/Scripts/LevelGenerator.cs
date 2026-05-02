@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,13 +24,14 @@ public class LevelGenerator : MonoBehaviour
 
     [Header("Game Settings")]
     public static int currentLevel = 1;
-    public float floorSpacing = 5.0f;
+    public float floorSpacing = 4.0f;
     public float gapWidth = 3.5f;
 
     public static float screenLimit;
     private int chicksSpawned = 0;
     private int catsSpawned   = 0;
     private int lastGapPattern = -1;
+    private float lastGapX = 999f;
 
     private GameObject firstFloorLeft;
     private GameObject firstFloorRight;
@@ -289,29 +290,46 @@ public class LevelGenerator : MonoBehaviour
     float GetGapX(int floorIndex, string pattern, float halfScreen)
     {
         float maxOffset = halfScreen * 0.5f;
+        float gapX = 0f;
 
         switch (pattern)
         {
             case "center":
-                return 0f;
+                gapX = 0f;
+                break;
 
             case "alternating":
                 if (lastGapPattern == -1) lastGapPattern = 0;
                 lastGapPattern = 1 - lastGapPattern;
-                return lastGapPattern == 0 ? -maxOffset * 0.5f : maxOffset * 0.5f;
+                gapX = lastGapPattern == 0 ? -maxOffset * 0.5f : maxOffset * 0.5f;
+                break;
 
             case "mixed":
                 int roll = Random.Range(0, 3);
-                if (roll == 0) return 0f;
-                if (roll == 1) return -maxOffset * 0.6f;
-                return maxOffset * 0.6f;
+                if (roll == 0) gapX = 0f;
+                else if (roll == 1) gapX = -maxOffset * 0.6f;
+                else gapX = maxOffset * 0.6f;
+                break;
 
             case "random":
-                return Random.Range(-maxOffset, maxOffset);
+                gapX = Random.Range(-maxOffset, maxOffset);
+                break;
 
             default:
-                return 0f;
+                gapX = 0f;
+                break;
         }
+
+        // 🔥 NEW LOGIC: prevent same gap twice
+        if (Mathf.Abs(gapX - lastGapX) < 0.1f)
+        {
+            gapX += Random.Range(0.5f, 1.5f) * (gapX >= 0 ? -1 : 1);
+            gapX = Mathf.Clamp(gapX, -maxOffset, maxOffset);
+        }
+
+        lastGapX = gapX;
+
+        return gapX;
     }
 
     // =========================================================
