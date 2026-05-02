@@ -100,6 +100,8 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f; // Unpause the game!
         gameHasStartedBefore = true;
 
+        if (startPanel != null) startPanel.SetActive(false);
+
         // Hide the start image (case-insensitive search just in case)
         foreach (Transform t in FindObjectsOfType<Transform>(true))
         {
