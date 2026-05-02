@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameFlowManager : MonoBehaviour
@@ -7,16 +7,36 @@ public class GameFlowManager : MonoBehaviour
     public GameObject losePanel;
     public GameObject winPanel;
 
+    private static bool hasGameEverStarted = false;
+
     void Start()
     {
-        Time.timeScale = 0f;
+        bool isLevelOne = SceneManager.GetActiveScene().buildIndex == 0;
 
-        if (startPanel != null)
-            startPanel.SetActive(true);
+        // Only pause and show the start screen on Level 1, the very first time.
+        // For ALL other levels, always unpause and hide the start panel.
+        if (isLevelOne && !hasGameEverStarted)
+        {
+            Time.timeScale = 0f;
+            if (startPanel != null)
+                startPanel.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            if (startPanel != null)
+                startPanel.SetActive(false);
+        }
+
+        // Always hide win/lose panels when a new level starts
+        if (winPanel != null) winPanel.SetActive(false);
+        if (losePanel != null) losePanel.SetActive(false);
     }
 
     public void OnPlayPressed()
     {
+        hasGameEverStarted = true;
+
         if (startPanel != null)
             startPanel.SetActive(false);
 
