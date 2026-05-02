@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -188,7 +188,7 @@ public class LevelGenerator : MonoBehaviour
         targetWorldWidth = Mathf.Max(targetWorldWidth, 0.3f);
 
         float scaleX = targetWorldWidth / FLOOR_SPRITE_W;
-        floor.transform.localScale = new Vector3(scaleX, floor.transform.localScale.y, 1f);
+        floor.transform.localScale = new Vector3(scaleX, 1f, 1f);
 
         // Fix collider so its world-width matches the visual width
         BoxCollider2D bc = floor.GetComponent<BoxCollider2D>();

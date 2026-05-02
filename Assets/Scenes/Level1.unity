@@ -482,6 +482,8 @@ MonoBehaviour:
   startPanel: {fileID: 0}
   losePanel: {fileID: 0}
   winPanel: {fileID: 0}
+  chickHUDPanel: {fileID: 0}
+  levelHUDPanel: {fileID: 0}
 --- !u!4 &423283412
 Transform:
   m_ObjectHideFlags: 0
@@ -660,6 +662,8 @@ MonoBehaviour:
   startPanel: {fileID: 0}
   losePanel: {fileID: 0}
   winPanel: {fileID: 0}
+  chickHUDPanel: {fileID: 0}
+  levelHUDPanel: {fileID: 0}
 --- !u!114 &526787260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1252,7 +1256,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!4 &966014938
 Transform:
@@ -1412,7 +1416,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200000, y: 900}
+  m_SizeDelta: {x: 200000, y: 2500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1187624911
 MonoBehaviour:
@@ -1488,7 +1492,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 350}
+  m_SizeDelta: {x: 5000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268160683
 MonoBehaviour:
