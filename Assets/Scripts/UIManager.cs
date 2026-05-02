@@ -26,10 +26,12 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        // Pause the game on Level 1 until they click Play
-        if (SceneManager.GetActiveScene().buildIndex == 0 && !gameHasStartedBefore)
+        bool isLevelOne = SceneManager.GetActiveScene().buildIndex == 0;
+
+        // Only pause on Level 1 for the very first play session. Always unpause for all other levels.
+        if (isLevelOne && !gameHasStartedBefore)
         {
-            Time.timeScale = 0f; 
+            Time.timeScale = 0f;
         }
         else
         {
@@ -44,19 +46,21 @@ public class UIManager : MonoBehaviour
             es.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
         }
 
-        // 2. Fix Start Panel appearing on every retry
-        // Try to auto-find it if it wasn't assigned in the inspector
+        // 2. Handle StartPanel visibility
         if (startPanel == null) startPanel = FindInactivePanel("StartPanel", "Start Panel", "start panel");
 
         if (startPanel != null)
         {
-            if (gameHasStartedBefore)
+            // Show StartPanel ONLY on Level 1 before the game has started
+            if (isLevelOne && !gameHasStartedBefore)
             {
-                startPanel.SetActive(false);
+                startPanel.SetActive(true);
+                gameHasStartedBefore = true; // mark so it never shows again
             }
             else
             {
-                gameHasStartedBefore = true; // Mark as started so it hides next time
+                // For every other level (Level 2+, or retrying Level 1 after death), always hide it
+                startPanel.SetActive(false);
             }
         }
 
