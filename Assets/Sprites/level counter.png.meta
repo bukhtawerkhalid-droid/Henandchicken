@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 0e6f2635e46a8514aae29e68f1926997
+guid: 90e5f2ec84242a640a32a3166edd19bc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4103245812459447607
-    second: Chicken 1_0
+      213: -1300342640956779683
+    second: level counter_0
   - first:
-      213: -989792377358890972
-    second: Chicken 1_1
+      213: 6779691323705366510
+    second: level counter_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +49,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chicken 1_0
+      name: level counter_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 136
-        height: 1536
+        x: 3
+        y: 1
+        width: 777
+        height: 290
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9cade3a6ca75e07c0800000000000000
-      internalID: -4103245812459447607
+      spriteID: d535a7fe14144fde0800000000000000
+      internalID: -1300342640956779683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chicken 1_1
+      name: level counter_1
       rect:
         serializedVersion: 2
-        x: 138
-        y: 8
-        width: 886
-        height: 1528
+        x: 787
+        y: 3
+        width: 274
+        height: 285
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4284222b31d8342f0800000000000000
-      internalID: -989792377358890972
+      spriteID: ee7914ca65d461e50800000000000000
+      internalID: 6779691323705366510
       vertices: []
       indices: 
       edges: []
@@ -163,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Chicken 1_0: -4103245812459447607
-      Chicken 1_1: -989792377358890972
+      level counter_0: -1300342640956779683
+      level counter_1: 6779691323705366510
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
