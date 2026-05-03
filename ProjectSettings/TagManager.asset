@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Floor
+  - Chick
+  - Cat
+  - Exit
   layers:
   - Default
   - TransparentFX
